@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><title>Ведомость участников · Печать</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f5f5;color:#141414;font:15px/1.45 system-ui,sans-serif}
+main{max-width:800px;margin:24px auto;padding:24px;background:#fff;border:1px solid #d8d8d8;border-radius:8px}
+img{display:block;max-width:340px;max-height:87px;width:auto;height:auto;margin-bottom:16px}
+h1{font-size:23px;line-height:1.2;margin:0 0 6px}p{margin:6px 0;overflow-wrap:anywhere}.meta{display:flex;flex-wrap:wrap;gap:6px 24px;margin:12px 0}
+.tools{max-width:800px;margin:20px auto;padding:0 16px}.tools p{font-size:13px;color:#575757}
+button{font:600 14px system-ui;padding:10px 16px;background:#151515;color:#fff;border:0;border-radius:5px;cursor:pointer}
+.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:575px;table-layout:fixed;font-size:13px}
+th,td{border:1px solid #aaa;padding:7px;overflow-wrap:anywhere;vertical-align:top;text-align:left}td{height:30px}th{background:#f5f5f5;font-size:12px}
+td:first-child,td:nth-child(3){text-align:center}thead{display:table-header-group}tr{break-inside:avoid}
+@media(max-width:850px){main{margin:16px;padding:16px}img{max-width:100%}}
+@page{size:A4 portrait;margin:12mm}
+@media print{
+  body{background:#fff;font-size:10pt}.tools{display:none}main{max-width:none;margin:0;padding:0;border:0;border-radius:0}
+  h1{font-size:15pt}img{max-width:90mm;max-height:23mm;margin-bottom:4mm}
+  .meta{font-size:9pt;gap:2mm 5mm;margin:3mm 0}.scroll{overflow:visible}
+  table{min-width:0;font-size:9pt}th,td{padding:1.2mm 1.8mm;line-height:1.2;border-color:#595959}th{font-size:9pt;background:#fff}td{height:7mm}
+}
+</style>
+</head>
+<body>
+<div class="tools"><button type="button" onclick="window.print()">Распечатать · A4 вертикально</button><p>Полная ведомость без редактирования. Временная ссылка действует 24 часа с момента создания.</p></div>
+<main>
+{{LOGO}}
+<h1>Ведомость участников</h1>
+<p>{{DATE}} · {{START}}</p><p>Место проведения: {{VENUE}}</p>
+<div class="meta"><span>Всего участников: {{COUNT}}</span><span>Пояса для сдачи: {{BELTS}}</span></div>
+<div class="scroll"><table aria-label="Ведомость участников">
+<colgroup><col style="width:7%"><col style="width:32%"><col style="width:10%"><col style="width:14%"><col style="width:15%"><col style="width:22%"></colgroup>
+<thead><tr><th scope="col">№</th><th scope="col">Участник</th><th scope="col">Возраст</th><th scope="col">Пояс</th><th scope="col">Оплата</th><th scope="col">Результат сдачи</th></tr></thead>
+<tbody>{{ROWS}}</tbody></table></div>
+</main>
+</body></html>

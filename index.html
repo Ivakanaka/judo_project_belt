@@ -18,6 +18,14 @@
 #judo-shared-logo nav button{padding:5px 10px;min-height:32px;border:1px solid transparent;background:transparent;border-radius:4px;font-size:12px;font-weight:650}
 #judo-shared-logo nav button[aria-pressed=true]{background:#fff;border-color:#ccc}
 #judo-shared-logo main{padding:24px clamp(16px,4cqw,40px) 18px}
+/* Desktop content stays 800px wide; existing tablet/mobile rules stay intact. */
+@media screen and (min-width:1200px){
+  #judo-shared-logo{width:880px;margin-inline:auto}
+  #judo-shared-logo header,#judo-shared-logo main{padding-inline:40px}
+}
+#judo-shared-logo .share-panel{padding:12px;margin-bottom:14px;border:1px solid var(--line);border-radius:6px;background:var(--wash)}
+#judo-shared-logo .share-panel label{display:grid;gap:5px;font-size:13px}
+#judo-shared-logo .share-panel .actions{margin-top:8px}
 #judo-shared-logo .hero{position:relative;isolation:isolate;overflow:hidden;min-height:207px;border:1px solid var(--line);border-top:0;border-radius:8px;padding:25px clamp(18px,3.6cqw,36px)}
 #judo-shared-logo h1{font-size:clamp(33px,6cqw,64px);letter-spacing:-.057em;line-height:1.05;margin:9px 0 17px;font-weight:760;max-width:66%;overflow-wrap:anywhere}
 #judo-shared-logo .overline{font-size:11px;font-weight:720;letter-spacing:.12em;text-transform:uppercase}
@@ -78,7 +86,7 @@
 #judo-shared-logo .question.dragging{opacity:.48}
 #judo-shared-logo .question.drop-before{box-shadow:0 -2px #1854b5}
 #judo-shared-logo .question.drop-after{box-shadow:0 2px #1854b5}
-#judo-shared-logo .sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#judo-shared-logo .sr-only{position:absolute;width:1px!important;height:1px!important;min-height:0!important;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 #judo-shared-logo .status:empty{display:none}
 #judo-shared-logo .materials{margin-top:14px}
 #judo-shared-logo .materials h2{font-size:clamp(23px,3.1cqw,33px);letter-spacing:-.035em;margin-bottom:12px}
@@ -269,8 +277,18 @@
         <label class="sort-tab"><input class="sr-only" type="radio" name="roster-sort" value="age" checked><span class="action">По возрасту</span></label>
         <label class="sort-tab"><input class="sr-only" type="radio" name="roster-sort" value="name"><span class="action">По фамилии А–Я</span></label>
       </fieldset>
-      <button type="button" class="action primary" data-print>Печать</button>
+      <div class="actions">
+        <button type="button" class="action" data-share>Поделиться</button>
+        <button type="button" class="action primary" data-print>Печать</button>
+      </div>
     </div>
+    <p class="help">Поделиться: ссылка на полную ведомость действует 24 часа. Получатель сможет просмотреть и распечатать её на A4, вертикально.</p>
+    <div class="share-panel" data-share-panel hidden>
+      <label>Ссылка для типографии<input type="url" data-share-url readonly></label>
+      <p class="help" data-share-expiry></p>
+      <div class="actions"><button type="button" class="action" data-send-share>Отправить ссылку</button><button type="button" class="action" data-copy-share>Копировать</button><a class="action" data-open-share target="_blank" rel="noopener noreferrer">Открыть</a></div>
+    </div>
+    <p class="help" data-share-status role="status" aria-live="polite"></p>
     <div class="roster-meta" data-tally aria-live="polite"></div>
     <div class="scroll" data-roster-table></div>
   </section>
@@ -664,7 +682,7 @@
   }
   function addRosterRow(body,entry,index) {
     const row = add(body,'tr');
-    for (const value of [index+1,entry.name,entry.age,entry.belt,'','']) add(row,'td',value);
+    for (const value of [index+1,entry.name,entry.age,entry.belt,entry.pay || '',entry.result || '']) add(row,'td',value);
     return row;
   }
   function renderRows() {
@@ -760,6 +778,72 @@
   const printPreview = find('[data-preview]');
   const printPages = find('[data-print-pages]');
   const staffScreen = find('[data-screen="staff"]');
+  const shareButton = find('[data-share]');
+  const shareStatus = find('[data-share-status]');
+  shareButton.addEventListener('click',async () => {
+    shareButton.disabled = true;
+    shareStatus.textContent = 'Создаём ссылку…';
+    find('[data-share-panel]').hidden = true;
+    // Capture all entries now, independently of later edits or screen sorting.
+    const snapshot = {
+      date:rosterDate(),start:config.start,venue:config.venue,
+      entries:ordered().map(entry => ({...entry})),logo:''
+    };
+    try {
+      if (savedLogo) {
+        const picture = new Image();
+        picture.src = savedLogo.url;
+        await picture.decode();
+        const raster = document.createElement('canvas');
+        const scale = Math.min(1,900/picture.naturalWidth,300/picture.naturalHeight);
+        raster.width = Math.max(1,Math.round(picture.naturalWidth*scale));
+        raster.height = Math.max(1,Math.round(picture.naturalHeight*scale));
+        raster.getContext('2d').drawImage(picture,0,0,raster.width,raster.height);
+        snapshot.logo = raster.toDataURL('image/png');
+      }
+      const response = await fetch('/api/shares',{
+        method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(snapshot)
+      });
+      if (!response.ok) throw new Error('share unavailable');
+      const result = await response.json();
+      const url = new URL(result.path,location.origin);
+      if (url.origin !== location.origin || !url.pathname.startsWith('/share/')) throw new Error('invalid share');
+      find('[data-share-url]').value = url.href;
+      find('[data-open-share]').href = url.href;
+      find('[data-share-expiry]').textContent = 'Действует до ' + new Intl.DateTimeFormat('ru',{
+        dateStyle:'long',timeStyle:'short'
+      }).format(new Date(result.expires_at)) + '. Снимок содержит всех участников на момент создания ссылки, без редактирования.';
+      find('[data-share-panel]').hidden = false;
+      shareStatus.textContent = 'Ссылка готова. Отправьте её в типографию.';
+    } catch {
+      shareStatus.textContent = 'Сервис временных ссылок недоступен. В этом предпросмотре можно распечатать ведомость кнопкой «Печать».';
+    } finally {
+      shareButton.disabled = false;
+    }
+  });
+  find('[data-copy-share]').addEventListener('click',async () => {
+    const input = find('[data-share-url]');
+    try {
+      await navigator.clipboard.writeText(input.value);
+      shareStatus.textContent = 'Ссылка скопирована.';
+    } catch {
+      input.focus();
+      input.select();
+      shareStatus.textContent = 'Скопируйте выделенную ссылку.';
+    }
+  });
+  find('[data-send-share]').addEventListener('click',async () => {
+    if (!navigator.share) {
+      find('[data-copy-share]').click();
+      return;
+    }
+    try {
+      await navigator.share({title:'Ведомость участников',text:'Полная ведомость для печати. Ссылка действует 24 часа.',url:find('[data-share-url]').value});
+      shareStatus.textContent = 'Ссылка передана для отправки.';
+    } catch (error) {
+      if (error.name !== 'AbortError') shareStatus.textContent = 'Не удалось отправить. Воспользуйтесь кнопкой «Копировать».';
+    }
+  });
   function preparePrint() {
     printPages.replaceChildren();
     staffScreen.hidden = true;
