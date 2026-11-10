@@ -53,6 +53,8 @@
 #judo-shared-logo .consent input{margin-top:2px}
 #judo-shared-logo [data-form] .fields{align-items:start}
 #judo-shared-logo [data-form] [aria-invalid="true"]{border-color:#a92b2b}
+#judo-shared-logo [name="age"][aria-invalid="true"]{color:#a12424}
+#judo-shared-logo [name="age"][aria-invalid="true"]::placeholder{color:#a12424;opacity:1}
 #judo-shared-logo .field-error{color:#a12424;font-size:12px;font-weight:500}
 #judo-shared-logo .field-error:empty{display:none}
 #judo-shared-logo .action{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;padding:7px 12px;border:1px solid #bdbdbd;border-radius:5px;background:#fff;font-size:13px;font-weight:680;text-decoration:none;text-align:center}
@@ -185,12 +187,12 @@
         <div class="fields">
           <label><span id="jlsl-label-last" data-copy="lastLabel"></span><input name="last" aria-labelledby="jlsl-label-last" aria-describedby="jlsl-error-last" placeholder="Иванов" required minlength="2" maxlength="50"><small id="jlsl-error-last" class="field-error" aria-live="polite"></small></label>
           <label><span id="jlsl-label-first" data-copy="firstLabel"></span><input name="first" aria-labelledby="jlsl-label-first" aria-describedby="jlsl-error-first" placeholder="Артём" required minlength="2" maxlength="50"><small id="jlsl-error-first" class="field-error" aria-live="polite"></small></label>
-          <label><span id="jlsl-label-age" data-copy="ageLabel"></span><input name="age" aria-labelledby="jlsl-label-age" aria-describedby="jlsl-error-age" type="text" inputmode="numeric" value="0" required><small id="jlsl-error-age" class="field-error" aria-live="polite"></small></label>
+          <label><span id="jlsl-label-age" data-copy="ageLabel"></span><input name="age" aria-labelledby="jlsl-label-age" aria-describedby="jlsl-error-age" type="text" inputmode="numeric" placeholder="Введите возраст" required><small id="jlsl-error-age" class="field-error" aria-live="polite"></small></label>
           <label><span id="jlsl-label-belt" data-copy="beltLabel"></span><select name="belt" aria-labelledby="jlsl-label-belt" aria-describedby="jlsl-error-belt" required><option value="">Выберите пояс</option></select><small id="jlsl-error-belt" class="field-error" aria-live="polite"></small></label>
         </div>
         <div class="agreements">
-          <div class="consent"><input type="checkbox" aria-label="Даю согласие на обработку персональных данных" aria-describedby="jlsl-error-agreements" required><a href="#jlsl-doc" data-doc="consent">Согласие на обработку персональных данных</a></div>
-          <div class="consent"><input type="checkbox" aria-label="Ознакомлен с политикой обработки персональных данных" aria-describedby="jlsl-error-agreements" required><a href="#jlsl-doc" data-doc="privacy">Политика обработки персональных данных</a></div>
+          <div class="consent"><input type="checkbox" aria-labelledby="jlsl-consent-link" aria-describedby="jlsl-error-agreements" required><a id="jlsl-consent-link" href="#jlsl-doc" data-agreement="consent" data-doc="consent">Согласие на обработку персональных данных</a></div>
+          <div class="consent"><input type="checkbox" aria-labelledby="jlsl-privacy-link" aria-describedby="jlsl-error-agreements" required><a id="jlsl-privacy-link" href="#jlsl-doc" data-agreement="privacy" data-doc="privacy">Политика обработки персональных данных</a></div>
           <small id="jlsl-error-agreements" class="field-error" aria-live="polite"></small>
         </div>
         <button type="submit" class="action primary full"><span data-copy="submitLabel"></span> <span aria-hidden="true">→</span></button>
@@ -239,6 +241,16 @@
           <h3>Обложка и пояса</h3><label class="color"><input name="background" type="color"> Фон верхнего блока</label>
           <p class="help">Выбранный пояс виден при открытии формы.</p>
           <fieldset><legend>Пояс на обложке</legend><div class="belt-grid" data-cover-belts></div></fieldset>
+        </section>
+        <section class="panel editor span" aria-labelledby="jlsl-agreement-settings">
+          <h3 id="jlsl-agreement-settings">Согласия и документы</h3>
+          <p class="help">Оба пункта всегда обязательны. Укажите свои подписи и ссылки на документы. Если ссылка не задана, откроется встроенный образец.</p>
+          <div class="fields">
+            <label>Текст согласия<input name="consentText" required maxlength="200"></label>
+            <label>Ссылка на согласие<input name="consentUrl" type="url" inputmode="url" maxlength="2000" placeholder="https://…"></label>
+            <label>Текст политики<input name="privacyText" required maxlength="200"></label>
+            <label>Ссылка на политику<input name="privacyUrl" type="url" inputmode="url" maxlength="2000" placeholder="https://…"></label>
+          </div>
         </section>
         <section class="panel editor span">
           <div class="heading"><h3>Памятка участника</h3><button type="button" class="action" data-add-question>Добавить вопрос</button></div>
@@ -324,7 +336,9 @@
     title:'Сдача на пояс',date:'2026-11-28',deadline:'2026-11-25',start:'11:00',venue:'Зал клуба',background:'#ffffff',
     formTitle:'Запись участника',formHint:'Укажите данные того, кто будет сдавать на пояс.',lastLabel:'Фамилия',firstLabel:'Имя',
     ageLabel:'Возраст участника',beltLabel:'Пояс, на который сдаёте',submitLabel:'Отправить заявку',
-    guideTitle:'Памятка участника',guideHint:'Что проверить перед аттестацией.'
+    guideTitle:'Памятка участника',guideHint:'Что проверить перед аттестацией.',
+    consentText:'Согласие на обработку персональных данных',consentUrl:'',
+    privacyText:'Политика обработки персональных данных',privacyUrl:''
   };
   let coverBelt = 'Белый';
   let questions = [
@@ -404,6 +418,19 @@
     hero.style.setProperty('--event-caption',darkBackground ? '#d0d0d0' : '#575757');
     hero.style.setProperty('--link-color',darkBackground ? '#d0d0d0' : '#595959');
     for (const node of root.querySelectorAll('[data-copy]')) node.textContent = config[node.dataset.copy];
+    for (const key of ['consent','privacy']) {
+      const link = find('[data-agreement="' + key + '"]');
+      link.textContent = config[key + 'Text'];
+      if (config[key + 'Url']) {
+        link.removeAttribute('data-doc');
+        pointTo(link,config[key + 'Url']);
+      } else {
+        link.href = '#jlsl-doc';
+        link.dataset.doc = key;
+        link.removeAttribute('target');
+        link.removeAttribute('rel');
+      }
+    }
     find('[data-start]').textContent = dateLabel(config.date) + ', ' + config.start;
     find('[data-deadline]').textContent = 'До ' + dateLabel(config.deadline);
     renderVenue(find('[data-venue]'));
@@ -567,6 +594,24 @@
   function save(event) {
     event.preventDefault();
     if (saveButton.disabled || !settings.reportValidity()) return;
+    for (const key of ['consent','privacy']) {
+      const text = settings.elements[key + 'Text'];
+      const field = settings.elements[key + 'Url'];
+      if (!text.value.trim()) {
+        text.setCustomValidity('Введите текст пункта.');
+        text.reportValidity();
+        return;
+      }
+      if (field.value.trim()) {
+        let url;
+        try {url = new URL(field.value.trim());} catch {}
+        if (!url || !['https:','http:'].includes(url.protocol) || !url.hostname || url.username || url.password) {
+          field.setCustomValidity('Введите ссылку, начинающуюся с https:// или http://.');
+          field.reportValidity();
+          return;
+        }
+      }
+    }
     const deadline = settings.elements.deadline;
     if (deadline.value > settings.elements.date.value) {
       deadline.setCustomValidity('Срок записи должен быть не позже даты сдачи.');
@@ -609,7 +654,7 @@
   }
   function fieldMessage(field) {
     const value = field.value;
-    if (field.name === 'age') return ageAllowed(value) ? '' : ageHint;
+    if (field.name === 'age') return !value.trim() ? 'Введите возраст' : ageAllowed(value) ? '' : ageHint;
     if (field.name === 'belt') return belts.some(([name]) => name === value) ? '' : 'Выберите пояс из списка.';
     const name = normalizedName(value);
     if (!name) return field.name === 'last' ? 'Введите фамилию.' : 'Введите имя.';
@@ -621,7 +666,7 @@
     field.setCustomValidity(message);
     if (message) field.setAttribute('aria-invalid','true');
     else field.removeAttribute('aria-invalid');
-    find('#jlsl-error-' + field.name).textContent = message;
+    find('#jlsl-error-' + field.name).textContent = field.name === 'age' && !field.value.trim() ? '' : message;
   }
   function restrictInsertion(field,event,inserted) {
     if (inserted == null || !event.cancelable || event.isComposing) return;
@@ -941,10 +986,10 @@
         }
       }
       if (field.name === 'age' && /^0[0-9]+$/.test(field.value)) field.value = String(Number(field.value));
-      if (find('#jlsl-error-' + field.name).textContent) showFieldError(field,fieldMessage(field));
+      if (field.hasAttribute('aria-invalid') || find('#jlsl-error-' + field.name).textContent) showFieldError(field,fieldMessage(field));
     });
     field.addEventListener('blur',() => {
-      if (field.value || field.hasAttribute('aria-invalid')) showFieldError(field,fieldMessage(field));
+      if (field.name === 'age' || field.value || field.hasAttribute('aria-invalid')) showFieldError(field,fieldMessage(field));
     });
     if (field === form.elements.belt) continue;
     if (nameField) field.addEventListener('compositionend',() => formatNameInput(field));
@@ -955,6 +1000,7 @@
     find('[data-status]').textContent = '';
     if (['date','deadline'].includes(event.target.name)) settings.elements.deadline.setCustomValidity('');
     if (event.target.matches('[data-material-title],[data-material-link]')) event.target.setCustomValidity('');
+    if (['consentText','consentUrl','privacyText','privacyUrl'].includes(event.target.name)) event.target.setCustomValidity('');
   });
   settings.addEventListener('invalid',event => {
     const details = event.target.closest('details');
