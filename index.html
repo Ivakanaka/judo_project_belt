@@ -1,0 +1,999 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Сдача на пояс · Ведомость участников</title><style>body{margin:0}</style></head><body>
+<div id="judo-shared-logo" lang="ru">
+<style>
+#judo-shared-logo{color-scheme:light;background:#fff;color:#141414;font:15px/1.45 system-ui,sans-serif;container-type:inline-size;--line:#d8d8d8;--wash:#f5f5f5}
+#judo-shared-logo *{box-sizing:border-box}
+#judo-shared-logo [hidden]{display:none!important}
+#judo-shared-logo :is(h1,h2,h3,p){margin:0;color:inherit}
+#judo-shared-logo :is(button,input,select,textarea){font:inherit;color:inherit}
+#judo-shared-logo :is(button,summary,a){cursor:pointer}
+#judo-shared-logo a{color:inherit;text-underline-offset:3px}
+#judo-shared-logo :is(header,.heading,.actions){display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+#judo-shared-logo :is(header,.heading){justify-content:space-between}
+#judo-shared-logo header{padding:14px clamp(16px,4cqw,40px)}
+#judo-shared-logo .brand{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:750;letter-spacing:.08em}
+#judo-shared-logo .brand b{display:grid;place-items:center;width:32px;height:32px;background:#141414;color:#fff;border-radius:4px;font-size:18px}
+#judo-shared-logo nav{display:flex;flex-wrap:wrap;gap:3px;padding:3px;background:var(--wash);border:1px solid var(--line);border-radius:7px}
+#judo-shared-logo nav button{padding:5px 10px;min-height:32px;border:1px solid transparent;background:transparent;border-radius:4px;font-size:12px;font-weight:650}
+#judo-shared-logo nav button[aria-pressed=true]{background:#fff;border-color:#ccc}
+#judo-shared-logo main{padding:24px clamp(16px,4cqw,40px) 18px}
+#judo-shared-logo .hero{position:relative;isolation:isolate;overflow:hidden;min-height:207px;border:1px solid var(--line);border-top:0;border-radius:8px;padding:25px clamp(18px,3.6cqw,36px)}
+#judo-shared-logo h1{font-size:clamp(33px,6cqw,64px);letter-spacing:-.057em;line-height:1.05;margin:9px 0 17px;font-weight:760;max-width:66%;overflow-wrap:anywhere}
+#judo-shared-logo .overline{font-size:11px;font-weight:720;letter-spacing:.12em;text-transform:uppercase}
+#judo-shared-logo .art{position:absolute;width:44%;height:calc(100% - 16px);inset:8px 1% 8px auto;display:grid;place-items:center;z-index:-1;pointer-events:none}
+#judo-shared-logo canvas{display:block;width:auto;height:100%;max-width:100%;max-height:225px;object-fit:contain}
+#judo-shared-logo .event{display:flex;gap:10px 24px;flex-wrap:wrap;max-width:68%}
+#judo-shared-logo .event span{display:grid;gap:2px;font-size:13px;min-width:0;overflow-wrap:anywhere}
+#judo-shared-logo .event small{font-size:11px;color:var(--event-caption,#575757)}
+#judo-shared-logo .event .venue{flex-basis:100%}
+#judo-shared-logo .venue b{overflow-wrap:anywhere}
+#judo-shared-logo :is(.agreements,.guide,[data-event-summary]) a,#judo-shared-logo .venue a{color:var(--link-color,#595959);text-decoration:underline}
+#judo-shared-logo .grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;align-items:start;margin-top:14px}
+#judo-shared-logo .participant-grid{align-items:stretch}
+#judo-shared-logo .panel{min-width:0;padding:19px 20px;border:1px solid var(--line);border-radius:8px;background:#fff}
+#judo-shared-logo :is(.guide,.materials){background:var(--wash)}
+#judo-shared-logo h2{font-size:23px;line-height:1.2;letter-spacing:-.026em;font-weight:730}
+#judo-shared-logo h3{font-size:18px}
+#judo-shared-logo .help{color:#575757;font-size:13px;margin:5px 0 14px}
+#judo-shared-logo .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px}
+#judo-shared-logo :is(.fields label,.editor>label,.question label,.material-edit label){display:grid;gap:4px;min-width:0;font-size:13px;font-weight:650}
+#judo-shared-logo :is(input:not([type=checkbox],[type=radio]),select,textarea){width:100%;min-width:0;min-height:37px;padding:6px 9px;border:1px solid #c8c8c8;border-radius:5px;background:#fafafa;font-size:14px;font-weight:400}
+#judo-shared-logo input:is([type=checkbox],[type=radio]){width:15px;height:15px;accent-color:#151515;margin:0;flex:none}
+#judo-shared-logo .agreements{display:grid;gap:6px;margin:14px 0 11px;font-size:13px}
+#judo-shared-logo .consent{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:8px;min-width:0}
+#judo-shared-logo .consent input{margin-top:2px}
+#judo-shared-logo [data-form] .fields{align-items:start}
+#judo-shared-logo [data-form] [aria-invalid="true"]{border-color:#a92b2b}
+#judo-shared-logo .field-error{color:#a12424;font-size:12px;font-weight:500}
+#judo-shared-logo .field-error:empty{display:none}
+#judo-shared-logo .action{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;padding:7px 12px;border:1px solid #bdbdbd;border-radius:5px;background:#fff;font-size:13px;font-weight:680;text-decoration:none;text-align:center}
+#judo-shared-logo .action:hover{background:#ececec}
+#judo-shared-logo .primary{background:#151515;color:#fff;border-color:#151515}
+#judo-shared-logo .primary:hover{background:#333}
+#judo-shared-logo .full{width:100%}
+#judo-shared-logo .guide{display:flex;flex-direction:column;min-height:0}
+#judo-shared-logo .guide-head{flex:none}
+#judo-shared-logo [data-guide]{min-height:0;overflow:auto;overscroll-behavior-y:contain}
+#judo-shared-logo [data-guide] summary{overflow-wrap:anywhere}
+@container(min-width:691px){#judo-shared-logo .participant-grid>.guide{contain:size}}
+@container(max-width:690px){#judo-shared-logo [data-guide]{max-height:260px}}
+#judo-shared-logo .guide details,#judo-shared-logo .labels{border-top:1px solid var(--line);font-size:13px}
+#judo-shared-logo summary{font-weight:690;padding:10px 0}
+#judo-shared-logo .guide details p{margin:0 0 9px;color:#484848;white-space:pre-line;overflow-wrap:anywhere}
+#judo-shared-logo .footer{padding-top:12px;color:#575757;font-size:11px}
+#judo-shared-logo .heading{margin-bottom:12px}
+#judo-shared-logo .editor>:is(label,.fields,details){margin-top:10px}
+#judo-shared-logo .editor>.color{display:flex;align-items:center;gap:8px}
+#judo-shared-logo input[type=color]{width:38px;height:34px;min-height:0;padding:3px;cursor:pointer}
+#judo-shared-logo fieldset{min-width:0;margin:0;padding:0;border:0}
+#judo-shared-logo legend{padding:0;margin-bottom:7px;font-size:13px;font-weight:720}
+#judo-shared-logo .belt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+#judo-shared-logo .choice{display:flex;align-items:center;gap:7px;min-height:46px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-size:13px;font-weight:650;cursor:pointer;overflow-wrap:anywhere}
+#judo-shared-logo .choice:has(input:checked){border-color:#141414;box-shadow:inset 0 0 0 1px #141414;background:var(--wash)}
+#judo-shared-logo .swatch{width:15px;height:15px;border:1px solid #777;border-radius:4px;flex:none}
+#judo-shared-logo .span{grid-column:1/-1}
+#judo-shared-logo .question{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1.7fr) auto;align-items:end;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid var(--line)}
+#judo-shared-logo .drag-handle{cursor:grab;align-self:center;min-width:36px;padding:5px;font-size:18px}
+#judo-shared-logo .question.dragging{opacity:.48}
+#judo-shared-logo .question.drop-before{box-shadow:0 -2px #1854b5}
+#judo-shared-logo .question.drop-after{box-shadow:0 2px #1854b5}
+#judo-shared-logo .sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#judo-shared-logo .status:empty{display:none}
+#judo-shared-logo .materials{margin-top:14px}
+#judo-shared-logo .materials h2{font-size:clamp(23px,3.1cqw,33px);letter-spacing:-.035em;margin-bottom:12px}
+#judo-shared-logo .material-list,#judo-shared-logo .material-drafts{display:grid;gap:8px}
+#judo-shared-logo .resource{min-width:0;border:1px solid var(--line);border-radius:6px;background:#fff}
+#judo-shared-logo .resource-row{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:54px;padding:8px 11px;text-decoration:none}
+#judo-shared-logo .resource-row strong{overflow-wrap:anywhere}
+#judo-shared-logo a.resource-row:hover{background:#fafafa}
+#judo-shared-logo .resource-row .action{min-height:32px;white-space:nowrap;font-size:12px}
+#judo-shared-logo .resource video{display:block;width:100%;max-height:420px;background:#171717}
+#judo-shared-logo .player{padding:0 11px 8px}
+#judo-shared-logo .video-title{padding:0;border:0;background:none;font-weight:700;text-align:left;text-decoration:underline;overflow-wrap:anywhere}
+#judo-shared-logo .resource-row .actions{flex:none;justify-content:flex-end}
+#judo-shared-logo .material-edit{display:grid;gap:8px;padding:11px;border:1px solid var(--line);border-radius:6px;background:var(--wash)}
+#judo-shared-logo .edit-top{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:8px}
+#judo-shared-logo .file-info{font-size:12px;overflow-wrap:anywhere}
+#judo-shared-logo .file-info button{min-height:28px;font-size:12px}
+#judo-shared-logo .scroll{overflow-x:auto}
+#judo-shared-logo table{width:100%;border-collapse:collapse;text-align:left;font-size:13px}
+#judo-shared-logo :is(th,td){padding:8px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+#judo-shared-logo th{font-size:12px;background:var(--wash)}
+#judo-shared-logo td select{min-width:102px}
+#judo-shared-logo .sort{display:inline-flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13px}
+#judo-shared-logo .sort select{width:auto}
+#judo-shared-logo :is(.doc,.sheet){margin-top:14px}
+#judo-shared-logo .sheet p{margin:7px 0}
+@container(max-width:690px){#judo-shared-logo .grid{grid-template-columns:1fr}#judo-shared-logo .hero{min-height:175px}#judo-shared-logo .art{width:37%}}
+@container(max-width:430px){#judo-shared-logo .fields{grid-template-columns:1fr}#judo-shared-logo .hero{min-height:0}#judo-shared-logo .art{display:none}#judo-shared-logo :is(h1,.event){max-width:100%}#judo-shared-logo .question{grid-template-columns:auto minmax(0,1fr) auto}#judo-shared-logo .question label{grid-column:2}#judo-shared-logo .drag-handle{grid-column:1;grid-row:1/3}#judo-shared-logo [data-remove-question]{grid-column:3;grid-row:2}}
+#judo-shared-logo .roster-date{color:#575757;font-size:14px;margin:5px 0 16px}
+#judo-shared-logo .logo-drop{display:inline-flex;flex-wrap:wrap;align-items:center;gap:9px 14px;max-width:100%;min-height:64px;margin-bottom:16px;padding:9px 13px;border:1px dashed #bdbdbd;border-radius:7px;background:#fafafa;cursor:pointer}
+#judo-shared-logo .logo-drop:focus-within,#judo-shared-logo .logo-drop.drag-over{outline:2px solid #141414;outline-offset:2px}
+#judo-shared-logo :is(.logo-drop img,.roster-logo,.hero-logo){display:block;width:auto;height:auto;object-fit:contain}
+#judo-shared-logo :is(.logo-drop img,.roster-logo){max-width:min(100%,440px);max-height:120px}
+#judo-shared-logo .roster-logo{margin:0 0 16px}
+#judo-shared-logo .hero-logo{max-width:min(52%,240px);max-height:56px;margin:0 0 12px}
+#judo-shared-logo .logo-copy{display:grid;gap:2px;font-size:13px}
+#judo-shared-logo .logo-copy small{font-size:12px;color:#575757}
+#judo-shared-logo .logo-error{color:#a12424;font-size:12px;margin:-9px 0 14px}
+#judo-shared-logo .roster-toolbar{margin:16px 0 11px;align-items:end}
+#judo-shared-logo .roster-toolbar fieldset{display:flex;gap:7px;flex-wrap:wrap}
+#judo-shared-logo .sort-tab{position:relative;cursor:pointer}
+#judo-shared-logo .sort-tab:has(:checked) .action{border-color:#141414;box-shadow:inset 0 0 0 1px #141414}
+#judo-shared-logo .sort-tab:focus-within .action{outline:2px solid #141414;outline-offset:2px}
+#judo-shared-logo .roster-meta{display:flex;gap:7px 24px;flex-wrap:wrap;color:#4b4b4b;font-size:13px;margin:0 0 10px}
+#judo-shared-logo .roster-table{table-layout:fixed;min-width:575px}
+#judo-shared-logo .roster-table :is(th,td){border:1px solid #c5c5c5}
+#judo-shared-logo .roster-table td{height:34px}
+#judo-shared-logo .roster-table :is(th,td):is(:first-child,:nth-child(3)){text-align:center;font-variant-numeric:tabular-nums}
+#judo-shared-logo .print-preview{background:#f2f2f2}
+#judo-shared-logo .print-pages{overflow-x:auto;display:grid;gap:12px}
+#judo-shared-logo .print-page{position:relative;width:210mm;height:296mm;padding:12mm;margin:0 auto;background:#fff;color:#141414}
+#judo-shared-logo .print-page img{display:block;width:auto;height:auto;max-width:90mm;max-height:23mm;margin-bottom:4mm}
+#judo-shared-logo .print-page h2{font-size:15pt}
+#judo-shared-logo .print-page .roster-date{font-size:10pt;margin:1mm 0 3mm}
+#judo-shared-logo .print-page .roster-meta{font-size:9pt;gap:2mm 5mm;margin-bottom:3mm}
+#judo-shared-logo .print-page .roster-table{min-width:0}
+#judo-shared-logo .print-page .roster-table :is(th,td){border-color:#595959;padding:1.15mm 1.8mm;font-size:9pt;line-height:1.2}
+#judo-shared-logo .print-page .roster-table td{height:7mm}
+#judo-shared-logo .print-page .roster-table th{background:#fff;font-weight:700}
+#judo-shared-logo .print-page tr{break-inside:avoid}
+#judo-shared-logo .print-page .page-number{position:absolute;right:12mm;bottom:8mm;font-size:9pt}
+@page{size:A4 portrait;margin:0}
+@media print{
+  body{margin:0}
+  body>:not(#judo-shared-logo):not(:has(#judo-shared-logo)){display:none!important}
+  #judo-shared-logo,#judo-shared-logo main,#judo-shared-logo .print-preview{margin:0;padding:0;border:0;background:#fff;container-type:normal}
+  #judo-shared-logo :is(header,[data-screen],.footer,.doc,.print-preview>.heading){display:none!important}
+  #judo-shared-logo .print-pages{display:block;overflow:visible}
+  #judo-shared-logo .print-page{margin:0;break-inside:avoid}
+  #judo-shared-logo .print-page+.print-page{break-before:page}
+}
+</style>
+<header>
+  <div class="brand"><b aria-hidden="true">Д</b> КЛУБ ДЗЮДО</div>
+  <nav aria-label="Режим прототипа">
+    <button type="button" data-view="participant" aria-pressed="false">Участник</button>
+    <button type="button" data-view="settings" aria-pressed="false">Настройки формы</button>
+    <button type="button" data-view="staff" aria-pressed="true">Ведомость участников</button>
+  </nav>
+</header>
+<main>
+  <section data-screen="participant" aria-label="Запись участника" hidden>
+    <div class="hero">
+      <div class="art" aria-hidden="true"><canvas width="780" height="680"></canvas></div>
+      <img class="hero-logo" data-hero-logo alt="Логотип клуба" hidden>
+      <h1 data-copy="title">Сдача на пояс</h1>
+      <div class="event">
+        <span><small>Начало</small><b data-start></b></span>
+        <span><small>Записаться</small><b data-deadline></b></span>
+        <span class="venue"><small>Место проведения</small><b data-venue></b></span>
+      </div>
+    </div>
+    <div class="grid participant-grid">
+      <form class="panel" data-form>
+        <h2 data-copy="formTitle">Запись участника</h2><p class="help" data-copy="formHint"></p>
+        <div class="fields">
+          <label><span id="jlsl-label-last" data-copy="lastLabel"></span><input name="last" aria-labelledby="jlsl-label-last" aria-describedby="jlsl-error-last" placeholder="Иванов" required minlength="2" maxlength="50"><small id="jlsl-error-last" class="field-error" aria-live="polite"></small></label>
+          <label><span id="jlsl-label-first" data-copy="firstLabel"></span><input name="first" aria-labelledby="jlsl-label-first" aria-describedby="jlsl-error-first" placeholder="Артём" required minlength="2" maxlength="50"><small id="jlsl-error-first" class="field-error" aria-live="polite"></small></label>
+          <label><span id="jlsl-label-age" data-copy="ageLabel"></span><input name="age" aria-labelledby="jlsl-label-age" aria-describedby="jlsl-error-age" type="text" inputmode="numeric" value="0" required><small id="jlsl-error-age" class="field-error" aria-live="polite"></small></label>
+          <label><span id="jlsl-label-belt" data-copy="beltLabel"></span><select name="belt" aria-labelledby="jlsl-label-belt" aria-describedby="jlsl-error-belt" required><option value="">Выберите пояс</option></select><small id="jlsl-error-belt" class="field-error" aria-live="polite"></small></label>
+        </div>
+        <div class="agreements">
+          <div class="consent"><input type="checkbox" aria-label="Даю согласие на обработку персональных данных" aria-describedby="jlsl-error-agreements" required><a href="#jlsl-doc" data-doc="consent">Согласие на обработку персональных данных</a></div>
+          <div class="consent"><input type="checkbox" aria-label="Ознакомлен с политикой обработки персональных данных" aria-describedby="jlsl-error-agreements" required><a href="#jlsl-doc" data-doc="privacy">Политика обработки персональных данных</a></div>
+          <small id="jlsl-error-agreements" class="field-error" aria-live="polite"></small>
+        </div>
+        <button type="submit" class="action primary full"><span data-copy="submitLabel"></span> <span aria-hidden="true">→</span></button>
+      </form>
+      <section class="panel" data-success hidden aria-live="polite">
+        <p class="overline">✓ Заявка принята</p><h2>Участник записан</h2><p class="help" data-confirmation></p><p data-event-summary></p>
+        <button type="button" class="action" data-again>Записать ещё участника</button>
+      </section>
+      <aside class="panel guide" id="jlsl-guide" aria-labelledby="jlsl-guide-title">
+        <div class="guide-head"><h2 id="jlsl-guide-title" data-copy="guideTitle"></h2><p class="help" data-copy="guideHint"></p></div><div data-guide></div>
+      </aside>
+    </div>
+    <section class="panel materials" aria-labelledby="jlsl-material-title">
+      <h2 id="jlsl-material-title">Материалы и информация</h2><div class="material-list" data-material-list></div>
+    </section>
+  </section>
+  <section data-screen="settings" aria-label="Настройки формы" hidden>
+    <form data-settings>
+    <label class="logo-drop">
+      <input class="sr-only" type="file" accept="image/*" data-logo-file aria-label="Загрузить логотип">
+      <img data-logo alt="Логотип клуба" hidden>
+      <span class="logo-copy"><strong data-logo-label>Заменить логотип</strong><small>Выберите файл или перетащите изображение</small></span>
+    </label>
+    <p class="logo-error status" data-logo-error role="alert"></p>
+      <div class="heading">
+        <h2>Настройки формы</h2>
+        <div class="actions"><button type="button" class="action" data-view="participant">Открыть форму</button><button type="submit" class="action primary">Сохранить настройки</button></div>
+      </div>
+      <p class="help status" data-status role="status"></p>
+      <div class="grid">
+        <section class="panel editor">
+          <h3>Событие</h3><label>Заголовок страницы<input name="title" required maxlength="72"></label>
+          <div class="fields">
+            <label>Дата сдачи<input name="date" type="date" required></label><label>Записаться до<input name="deadline" type="date" required></label>
+            <label class="span">Время начала<input name="start" type="time" required></label>
+          </div>
+          <label>Место проведения<input name="venue" required maxlength="500" placeholder="Название зала, адрес или ссылка"></label>
+          <details class="labels"><summary>Текст и подписи полей</summary><div class="fields">
+            <label>Заголовок формы<input name="formTitle" required maxlength="72"></label><label>Кнопка отправки<input name="submitLabel" required maxlength="42"></label>
+            <label class="span">Подсказка над формой<input name="formHint" required maxlength="150"></label>
+            <label>Поле фамилии<input name="lastLabel" required maxlength="42"></label><label>Поле имени<input name="firstLabel" required maxlength="42"></label>
+            <label>Поле возраста<input name="ageLabel" required maxlength="42"></label><label>Поле пояса<input name="beltLabel" required maxlength="42"></label>
+          </div></details>
+        </section>
+        <section class="panel editor">
+          <h3>Обложка и пояса</h3><label class="color"><input name="background" type="color"> Фон верхнего блока</label>
+          <p class="help">Выбранный пояс виден при открытии формы.</p>
+          <fieldset><legend>Пояс на обложке</legend><div class="belt-grid" data-cover-belts></div></fieldset>
+        </section>
+        <section class="panel editor span">
+          <div class="heading"><h3>Памятка участника</h3><button type="button" class="action" data-add-question>Добавить вопрос</button></div>
+          <div class="fields"><label>Заголовок памятки<input name="guideTitle" required maxlength="72"></label><label>Подсказка под заголовком<input name="guideHint" required maxlength="130"></label></div>
+          <p class="help">Перетащите вопрос за ⠿. В ответ можно вставить ссылку с https:// или http://.</p>
+          <div data-questions></div>
+          <p class="sr-only" data-order-status aria-live="polite"></p>
+        </section>
+        <section class="panel editor span" aria-labelledby="jlsl-edit-material-title">
+          <div class="heading"><h3 id="jlsl-edit-material-title">Материалы и информация</h3><button type="button" class="action" data-add-material>Добавить материал</button></div>
+          <div class="material-drafts" data-material-drafts></div>
+        </section>
+      </div>
+    </form>
+  </section>
+  <template id="jlsl-question">
+    <div class="question"><button type="button" class="action drag-handle" draggable="true" data-drag-question aria-label="Переместить вопрос стрелками вверх и вниз" aria-keyshortcuts="ArrowUp ArrowDown">⠿</button><label>Вопрос<input data-question required maxlength="90"></label><label>Ответ<textarea data-answer rows="2" required maxlength="600"></textarea></label><button type="button" class="action" data-remove-question aria-label="Удалить вопрос">×</button></div>
+  </template>
+  <template id="jlsl-material">
+    <div class="material-edit">
+      <div class="edit-top"><label>Заголовок<input data-material-title required maxlength="100" placeholder="Например, что взять на аттестацию"></label><button type="button" class="action" data-remove-material>Удалить материал</button></div>
+      <div class="fields">
+        <label>Файл<input type="file" data-material-file accept="video/*,.mp4,.webm,.ogv,.mov,.pdf,.doc,.docx,.txt,.png,.jpg,.jpeg"></label>
+        <label>Ссылка<input type="text" inputmode="url" data-material-link placeholder="https://…"></label>
+      </div>
+      <div class="actions file-info" data-file-info hidden><span></span><button type="button" class="action" data-remove-file>Убрать файл</button></div>
+    </div>
+  </template>
+  <section class="panel" data-screen="staff" aria-labelledby="jlsl-title">
+    <img class="roster-logo" data-roster-logo alt="Логотип клуба" hidden>
+    <h2 id="jlsl-title">Ведомость участников</h2>
+    <p class="roster-date" data-roster-date></p>
+    <div class="heading roster-toolbar">
+      <fieldset>
+        <legend>Сортировка</legend>
+        <label class="sort-tab"><input class="sr-only" type="radio" name="roster-sort" value="age" checked><span class="action">По возрасту</span></label>
+        <label class="sort-tab"><input class="sr-only" type="radio" name="roster-sort" value="name"><span class="action">По фамилии А–Я</span></label>
+      </fieldset>
+      <button type="button" class="action primary" data-print>Печать</button>
+    </div>
+    <div class="roster-meta" data-tally aria-live="polite"></div>
+    <div class="scroll" data-roster-table></div>
+  </section>
+  <section class="panel print-preview" data-preview aria-label="Предпросмотр печати" hidden>
+    <div class="heading"><h2>Предпросмотр печати</h2><button type="button" class="action" data-back-to-roster>К ведомости</button></div>
+    <div class="print-pages" data-print-pages></div>
+  </section>
+  <section class="panel doc" id="jlsl-doc" aria-label="Просмотр документа" hidden>
+    <div class="actions"><button type="button" class="action" data-close>Закрыть</button></div>
+    <div data-doc-body></div>
+  </section>
+  <p class="footer">Демо · Используйте вымышленные данные. Настройки и записи сбрасываются при обновлении.</p>
+</main>
+<script>
+(() => {
+  const root = document.getElementById('judo-shared-logo');
+  const find = selector => root.querySelector(selector);
+  const form = find('[data-form]');
+  const settings = find('[data-settings]');
+  const hero = find('.hero');
+  const canvas = find('canvas');
+  const ctx = canvas.getContext('2d');
+  const doc = find('#jlsl-doc');
+  const docBody = find('[data-doc-body]');
+  const draftList = find('[data-material-drafts]');
+  const questionList = find('[data-questions]');
+  const guide = find('[data-guide]');
+  let draggedQuestion = null;
+  let markedQuestion = null;
+  const files = new WeakMap();
+  const belts = [['Белый','#fff'],['Жёлтый','#eec64b'],['Оранжевый','#df8c48'],['Зелёный','#659464'],['Синий','#426bb1'],['Чёрный','#222']];
+  const config = {
+    title:'Сдача на пояс',date:'2026-11-28',deadline:'2026-11-25',start:'11:00',venue:'Зал клуба',background:'#ffffff',
+    formTitle:'Запись участника',formHint:'Укажите данные того, кто будет сдавать на пояс.',lastLabel:'Фамилия',firstLabel:'Имя',
+    ageLabel:'Возраст участника',beltLabel:'Пояс, на который сдаёте',submitLabel:'Отправить заявку',
+    guideTitle:'Памятка участника',guideHint:'Что проверить перед аттестацией.'
+  };
+  let coverBelt = 'Белый';
+  let questions = [
+    ['Как проходит сдача','Отметьтесь у помощника, пройдите разминку и дождитесь вызова. Упражнения зависят от пояса.'],
+    ['Когда прийти и что взять','Возьмите дзюдоги, текущий пояс, сменную обувь и воду. Время сбора указано в подтверждении.'],
+    ['Оплата и вопросы','Порядок оплаты и изменения в заявке уточняйте у администратора в чате клуба.']
+  ];
+  const checklist = new File(['Чек-лист участника\n\nДзюдоги, текущий пояс, сменная обувь и вода.\n'], 'judo-checklist.txt',{type:'text/plain;charset=utf-8'});
+  let materials = [
+    {title:'Что взять на аттестацию',file:checklist,link:''},
+    {title:'Как проходит сдача',file:null,link:'#jlsl-guide'}
+  ];
+  let urls = [];
+  let opener = null;
+  const entries = [
+    ['Ветров Даниил',10,'Жёлтый'], ['Лескова Мария',8,'Жёлтый'], ['Орлова Софья',11,'Белый'],
+    ['Громова Анна',9,'Белый'], ['Ильин Артём',7,'Белый'], ['Ковалёв Лев',8,'Белый'],
+    ['Морозова Ева',10,'Жёлтый'], ['Никитин Максим',12,'Жёлтый'], ['Полякова Вера',9,'Белый'],
+    ['Романов Иван',11,'Жёлтый'], ['Соколова Алиса',7,'Белый'], ['Яковлев Михаил',12,'Жёлтый']
+  ].map(([name,age,belt]) => ({name,age,belt}));
+  const beltPieces = [
+    ['M36 63 C51 24 119 13 185 12 C269 10 341 31 355 64 L331 88 C296 66 250 58 191 58 C137 57 93 66 62 88 Z',
+     'M41 64 C74 30 135 26 188 25 C254 24 322 41 350 66 M51 72 C80 45 135 38 188 38 C246 37 307 50 342 74 M58 80 C92 57 140 48 189 49 C247 49 298 58 334 82'],
+    ['M161 162 C125 183 66 250 21 309 Q35 332 70 332 C101 269 144 216 189 181 Z',
+     'M168 172 C120 205 67 268 28 318 M176 174 C130 208 77 270 41 326 M182 177 C138 214 92 273 55 331'],
+    ['M214 169 C254 193 300 253 328 334 Q354 329 371 308 C336 236 288 178 246 157 Z',
+     'M221 173 C265 207 308 269 337 332 M231 170 C277 204 323 264 349 326 M240 165 C290 199 334 261 360 318'],
+    ['M190 147 C252 130 328 92 355 64 C364 82 369 109 360 127 C329 154 282 177 235 187 Q211 192 195 182 Z',
+     'M194 154 C254 138 331 101 360 77 M197 164 C259 147 333 114 364 91 M198 174 C262 157 334 126 365 105 M204 182 C267 168 335 137 363 119'],
+    ['M147 142 Q166 123 194 140 Q216 151 221 177 L207 205 Q177 198 157 177 Q141 161 147 142 Z',
+     'M147 147 Q168 135 192 146 Q210 155 219 181 M148 154 Q170 145 192 156 Q207 165 217 185 M155 175 Q178 187 210 193'],
+    ['M36 63 C57 93 137 138 185 152 Q201 158 207 178 Q202 189 183 190 C125 184 57 145 32 117 Q26 98 36 63 Z',
+     'M33 74 C62 107 135 143 189 162 Q201 168 206 178 M31 87 C61 119 135 155 188 172 Q199 176 203 183 M30 101 C61 131 130 169 190 181'],
+    ['M177 137 C190 128 211 129 228 135 C239 153 246 169 243 186 Q223 197 208 215 Q199 213 192 208 C194 185 187 158 177 137 Z',
+     'M189 132 C203 151 213 181 211 212 M202 130 C216 148 228 176 225 201 M215 132 C229 150 240 173 238 189']
+  ].map(pair => pair.map(path => new Path2D(path)));
+
+  function add(parent,tag,text = '',className = '') {
+    const node = document.createElement(tag);
+    node.textContent = text;
+    if (className) node.className = className;
+    parent.append(node);
+    return node;
+  }
+  function drawBelt() {
+    if (!ctx) return;
+    const belt = form.elements.belt.value || coverBelt;
+    ctx.setTransform(2,0,0,2,0,0);
+    ctx.clearRect(0,0,390,340);
+    ctx.fillStyle = (belts.find(([name]) => name === belt) || belts.find(([name]) => name === coverBelt))[1];
+    ctx.lineCap = ctx.lineJoin = 'round';
+    for (const [shape,stitches] of beltPieces) {
+      ctx.fill(shape);
+      ctx.save();
+      ctx.clip(shape);
+      ctx.strokeStyle = 'rgba(125, 125, 125, 0.25)';
+      ctx.lineWidth = 1.45;
+      ctx.stroke(stitches);
+      ctx.restore();
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 2.25;
+      ctx.stroke(shape);
+    }
+  }
+  function contrastText(hex) {
+    const rgb = hex.slice(1).match(/../g).map(value => parseInt(value,16)/255);
+    const linear = rgb.map(value => value <= .04045 ? value/12.92 : ((value+.055)/1.055)**2.4);
+    return .2126*linear[0]+.7152*linear[1]+.0722*linear[2] > .179 ? '#000' : '#fff';
+  }
+  function dateLabel(value) {
+    return new Intl.DateTimeFormat('ru',{day:'numeric',month:'long',timeZone:'UTC'}).format(new Date(value+'T00:00:00Z'));
+  }
+  function renderParticipant() {
+    hero.style.backgroundColor = config.background;
+    hero.style.color = contrastText(config.background);
+    const darkBackground = hero.style.color === 'rgb(255, 255, 255)';
+    hero.style.setProperty('--event-caption',darkBackground ? '#d0d0d0' : '#575757');
+    hero.style.setProperty('--link-color',darkBackground ? '#d0d0d0' : '#595959');
+    for (const node of root.querySelectorAll('[data-copy]')) node.textContent = config[node.dataset.copy];
+    find('[data-start]').textContent = dateLabel(config.date) + ', ' + config.start;
+    find('[data-deadline]').textContent = 'До ' + dateLabel(config.deadline);
+    renderVenue(find('[data-venue]'));
+    const summary = find('[data-event-summary]');
+    summary.textContent = dateLabel(config.date) + ', ' + config.start + ' · ';
+    renderVenue(summary);
+    guide.replaceChildren();
+    questions.forEach(([question,answer],index) => {
+      const details = add(guide,'details');
+      details.open = index === 0;
+      add(details,'summary',question);
+      appendAnswer(add(details,'p'),answer);
+    });
+    drawBelt();
+    renderMaterials();
+  }
+  function renderVenue(target) {
+    if (target.matches('[data-venue]')) target.replaceChildren();
+    const venue = config.venue;
+    if (/^https?:\/\/\S+$/i.test(venue)) {
+      pointTo(add(target,'a',venue),venue);
+    } else {
+      target.append(venue);
+    }
+  }
+  function appendAnswer(target,answer) {
+    let end = 0;
+    for (const match of answer.matchAll(/https?:\/\/[^\s<>"]+/gi)) {
+      const url = match[0].replace(/[.,!?;:…\)\]]+$/,'');
+      target.append(answer.slice(end,match.index));
+      if (url) pointTo(add(target,'a',url),url);
+      end = match.index + url.length;
+    }
+    target.append(answer.slice(end));
+  }
+  function pointTo(anchor,url) {
+    anchor.href = url;
+    if (url === '#jlsl-guide') {
+      anchor.addEventListener('click',event => {
+        event.preventDefault();
+        const target = find(url);
+        target.scrollIntoView({block:'nearest'});
+        target.querySelector('summary')?.focus({preventScroll:true});
+      });
+    } else {
+      anchor.target = '_blank';
+      anchor.rel = 'noopener noreferrer';
+    }
+  }
+  function renderMaterials() {
+    for (const url of urls) URL.revokeObjectURL(url);
+    urls = [];
+    const list = find('[data-material-list]');
+    list.replaceChildren();
+    if (!materials.length) add(list,'p','Материалы пока не добавлены.');
+    for (const item of materials) {
+      if (item.link && !item.file) {
+        const row = add(list,'a','','resource resource-row');
+        pointTo(row,item.link);
+        add(row,'strong',item.title);
+        add(row,'span','Перейти','action');
+        continue;
+      }
+      const card = add(list,'div','','resource');
+      const row = add(card,'div','','resource-row');
+      const isVideo = item.file && (item.file.type.startsWith('video/') || /\.(mp4|webm|ogv|mov)$/i.test(item.file.name));
+      let titleControl;
+      if (isVideo) {
+        titleControl = add(row,'button',item.title,'video-title');
+        titleControl.type = 'button';
+        titleControl.setAttribute('aria-expanded','false');
+      } else {
+        add(row,'strong',item.title);
+      }
+      if (!item.file) continue;
+      const actions = add(row,'div','','actions');
+      const url = URL.createObjectURL(item.file);
+      urls.push(url);
+      const download = add(actions,'a','Скачать ↓','action');
+      download.href = url;
+      download.download = item.file.name;
+      download.setAttribute('aria-label','Скачать ' + item.title);
+      if (item.link) pointTo(add(actions,'a','Перейти','action'),item.link);
+      if (isVideo) {
+        const player = add(card,'div','','player');
+        player.hidden = true;
+        const video = add(player,'video');
+        video.controls = true;
+        video.playsInline = true;
+        video.preload = 'none';
+        video.src = url;
+        video.setAttribute('aria-label',item.title);
+        titleControl.addEventListener('click',() => {
+          player.hidden = !player.hidden;
+          titleControl.setAttribute('aria-expanded',String(!player.hidden));
+          if (player.hidden) video.pause();
+        });
+      }
+    }
+  }
+  function editMaterial(item = {title:'',file:null,link:''}) {
+    const row = find('#jlsl-material').content.firstElementChild.cloneNode(true);
+    const title = row.querySelector('[data-material-title]');
+    const link = row.querySelector('[data-material-link]');
+    const input = row.querySelector('[data-material-file]');
+    const info = row.querySelector('[data-file-info]');
+    title.value = item.title;
+    link.value = item.link;
+    files.set(row,item.file);
+    function showFile() {
+      const file = files.get(row);
+      info.hidden = !file;
+      info.querySelector('span').textContent = file?.name || '';
+    }
+    input.addEventListener('change',() => {
+      if (input.files[0]) files.set(row,input.files[0]);
+      input.value = '';
+      showFile();
+    });
+    row.querySelector('[data-remove-file]').addEventListener('click',() => {
+      files.set(row,null);
+      showFile();
+      input.focus();
+      find('[data-status]').textContent = '';
+    });
+    draftList.append(row);
+    showFile();
+    return title;
+  }
+  function materialValues() {
+    const values = [];
+    for (const row of draftList.children) {
+      const title = row.querySelector('[data-material-title]');
+      const field = row.querySelector('[data-material-link]');
+      const link = field.value.trim();
+      if (!title.value.trim()) {
+        title.setCustomValidity('Введите заголовок материала.');
+        title.reportValidity();
+        return;
+      }
+      if (link && link !== '#jlsl-guide') {
+        let parsed;
+        try {parsed = new URL(link);} catch {}
+        if (!parsed || !['https:','http:'].includes(parsed.protocol)) {
+          field.setCustomValidity('Введите адрес, начинающийся с https:// или http://.');
+          field.reportValidity();
+          return;
+        }
+      }
+      values.push({title:title.value.trim(),link,file:files.get(row)});
+    }
+    return values;
+  }
+  function editQuestion(question = '',answer = '') {
+    const row = find('#jlsl-question').content.firstElementChild.cloneNode(true);
+    row.querySelector('[data-question]').value = question;
+    row.querySelector('[data-answer]').value = answer;
+    questionList.append(row);
+    return row.querySelector('[data-question]');
+  }
+  function save(event) {
+    event.preventDefault();
+    if (saveButton.disabled || !settings.reportValidity()) return;
+    const deadline = settings.elements.deadline;
+    if (deadline.value > settings.elements.date.value) {
+      deadline.setCustomValidity('Срок записи должен быть не позже даты сдачи.');
+      deadline.reportValidity();
+      return;
+    }
+    const nextMaterials = materialValues();
+    if (!nextMaterials) return;
+    for (const key of Object.keys(config)) config[key] = settings.elements[key].value.trim();
+    const nextBelt = settings.elements.coverBelt.value;
+    if (nextBelt !== coverBelt) form.elements.belt.value = '';
+    coverBelt = nextBelt;
+    questions = [...questionList.children].map(row => [row.querySelector('[data-question]').value,row.querySelector('[data-answer]').value]);
+    materials = nextMaterials;
+    applyLogo();
+    renderParticipant();
+    renderRows();
+    find('[data-status]').textContent = 'Сохранено. Пояс на обложке: ' + coverBelt.toLowerCase() + '.';
+  }
+  const nameCharacters = /^(?:(?=\p{Script=Cyrillic})\p{L}|[ '\u00a0’\-‑])*$/u;
+  const nameWords = /^\p{L}[\p{L}\p{M}]*(?:[ '’\-‑]\p{L}[\p{L}\p{M}]*)*$/u;
+  const nameHint = 'Используйте кириллицу. В составных именах и фамилиях можно ставить пробел, дефис или апостроф.';
+  const ageHint = 'Укажите целый возраст от 0 до 100.';
+  const requiredFields = ['last','first','age','belt'].map(name => form.elements[name]);
+  function capitalizeName(value) {
+    return value.replace(/^([ \u00a0]*)(\p{Script=Cyrillic})/u,(_,spaces,letter) => spaces + letter.toLocaleUpperCase('ru'));
+  }
+  function normalizedName(value) {
+    return capitalizeName(value.trim().replace(/[ \u00a0]+/g,' ').normalize('NFC'));
+  }
+  function formatNameInput(field) {
+    const formatted = capitalizeName(field.value);
+    if (formatted === field.value) return;
+    const {selectionStart,selectionEnd,selectionDirection} = field;
+    field.value = formatted;
+    field.setSelectionRange(selectionStart,selectionEnd,selectionDirection);
+  }
+  function ageAllowed(value) {
+    return /^[0-9]{1,3}$/.test(value) && Number(value) <= 100;
+  }
+  function fieldMessage(field) {
+    const value = field.value;
+    if (field.name === 'age') return ageAllowed(value) ? '' : ageHint;
+    if (field.name === 'belt') return belts.some(([name]) => name === value) ? '' : 'Выберите пояс из списка.';
+    const name = normalizedName(value);
+    if (!name) return field.name === 'last' ? 'Введите фамилию.' : 'Введите имя.';
+    if (!nameCharacters.test(name) || !nameWords.test(name)) return nameHint;
+    if ((name.match(/\p{L}/gu) || []).length < 2) return 'Введите не менее двух букв.';
+    return name.length > 50 ? 'Введите не более 50 символов.' : '';
+  }
+  function showFieldError(field,message) {
+    field.setCustomValidity(message);
+    if (message) field.setAttribute('aria-invalid','true');
+    else field.removeAttribute('aria-invalid');
+    find('#jlsl-error-' + field.name).textContent = message;
+  }
+  function restrictInsertion(field,event,inserted) {
+    if (inserted == null || !event.cancelable || event.isComposing) return;
+    const next = field.value.slice(0,field.selectionStart) + inserted + field.value.slice(field.selectionEnd);
+    const age = field.name === 'age';
+    const hasNameCharacters = !age && nameCharacters.test(next.normalize('NFC'));
+    const allowed = age ? next === '' || ageAllowed(next) : hasNameCharacters && next.length <= 50;
+    if (allowed) return;
+    event.preventDefault();
+    const message = age ? ageHint : hasNameCharacters ? 'Введите не более 50 символов.' : nameHint;
+    find('#jlsl-error-' + field.name).textContent = message;
+  }
+  const agreements = [...form.querySelectorAll('.agreements input')];
+  const agreementError = find('#jlsl-error-agreements');
+  function register(event) {
+    event.preventDefault();
+    for (const field of requiredFields) showFieldError(field,fieldMessage(field));
+    agreementError.textContent = agreements.every(input => input.checked) ? '' : 'Отметьте оба пункта.';
+    if (!form.checkValidity()) {
+      form.querySelector(':invalid').focus();
+      return;
+    }
+    const {last,first,age,belt} = form.elements;
+    const entry = {name:normalizedName(last.value)+' '+normalizedName(first.value),age:Number(age.value),belt:belt.value};
+    entries.push(entry);
+    find('[data-confirmation]').textContent = entry.name + ' · ' + entry.belt.toLowerCase() + ' пояс';
+    closeDoc();
+    form.reset();
+    agreementError.textContent = '';
+    for (const field of requiredFields) showFieldError(field,'');
+    drawBelt();
+    form.hidden = true;
+    find('[data-success]').hidden = false;
+    find('[data-again]').focus({preventScroll:true});
+    renderRows();
+  }
+  function ordered() {
+    const byAge = find('[name="roster-sort"]:checked').value === 'age';
+    return [...entries].sort((a,b) => (byAge ? a.age-b.age : 0) || a.name.localeCompare(b.name,'ru'));
+  }
+  function rosterDate() {
+    return 'Аттестация · ' + dateLabel(config.date);
+  }
+  function renderRosterMeta(target) {
+    const present = new Set(entries.map(entry => entry.belt));
+    const beltNames = belts.map(([name]) => name).filter(name => present.has(name));
+    add(target,'span','Всего участников: ' + entries.length);
+    add(target,'span','Пояса для сдачи: ' + (beltNames.join(', ') || '—'));
+  }
+  function makeRosterTable(parent) {
+    const table = add(parent,'table','','roster-table');
+    table.setAttribute('aria-label','Ведомость участников');
+    const cols = add(table,'colgroup');
+    for (const width of [7,32,10,14,15,22]) add(cols,'col').style.width = width + '%';
+    const head = add(add(table,'thead'),'tr');
+    for (const name of ['№','Участник','Возраст','Пояс','Оплата','Результат сдачи']) add(head,'th',name).scope = 'col';
+    return add(table,'tbody');
+  }
+  function addRosterRow(body,entry,index) {
+    const row = add(body,'tr');
+    for (const value of [index+1,entry.name,entry.age,entry.belt,'','']) add(row,'td',value);
+    return row;
+  }
+  function renderRows() {
+    find('[data-roster-date]').textContent = rosterDate();
+    const tally = find('[data-tally]');
+    tally.replaceChildren();
+    renderRosterMeta(tally);
+    const table = find('[data-roster-table]');
+    table.replaceChildren();
+    const body = makeRosterTable(table);
+    ordered().forEach((entry,index) => addRosterRow(body,entry,index));
+  }
+  const logoInput = find('[data-logo-file]');
+  const logo = find('[data-logo]');
+  const logoDrop = logoInput.closest('label');
+  const logoError = find('[data-logo-error]');
+  let logoVersion = 0;
+  const sampleLogo = new Blob([`
+    <svg xmlns="http://www.w3.org/2000/svg" width="180" height="52" viewBox="0 0 180 52">
+      <rect width="180" height="52" rx="8" fill="#161616"/>
+      <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="27" cy="26" r="15"/>
+        <path d="M16 23l11 4 11-4m-11 4-8 8m8-8 8 8"/>
+      </g>
+      <g fill="#fff" font-family="system-ui,sans-serif">
+        <text x="52" y="25" font-size="16" font-weight="750" letter-spacing="1">ТАТАМИ</text>
+        <text x="52" y="40" font-size="9" font-weight="600" letter-spacing="1.2">ДЗЮДО-КЛУБ</text>
+      </g>
+    </svg>`],{type:'image/svg+xml'});
+  let draftLogo = {url:URL.createObjectURL(sampleLogo),width:180,height:52};
+  let savedLogo = null;
+  const saveButton = settings.querySelector('button[type=submit]');
+  function displayLogo(image,asset) {
+    image.hidden = !asset;
+    if (!asset) return;
+    image.setAttribute('width',asset.width);
+    image.setAttribute('height',asset.height);
+    image.src = asset.url;
+  }
+  function applyLogo() {
+    if (savedLogo && savedLogo !== draftLogo) URL.revokeObjectURL(savedLogo.url);
+    savedLogo = draftLogo;
+    displayLogo(find('[data-hero-logo]'),savedLogo);
+    displayLogo(find('[data-roster-logo]'),savedLogo);
+  }
+  async function loadLogo(file) {
+    if (!file) return;
+    const version = ++logoVersion;
+    saveButton.disabled = true;
+    logoError.textContent = '';
+    find('[data-status]').textContent = '';
+    const url = URL.createObjectURL(file);
+    const probe = new Image();
+    probe.src = url;
+    try {
+      await probe.decode();
+    } catch {
+      URL.revokeObjectURL(url);
+      if (version === logoVersion) {
+        logoError.textContent = 'Не удалось открыть изображение. Выберите другой файл.';
+        saveButton.disabled = false;
+      }
+      return;
+    }
+    if (version !== logoVersion) {
+      URL.revokeObjectURL(url);
+      return;
+    }
+    if (draftLogo && draftLogo !== savedLogo) URL.revokeObjectURL(draftLogo.url);
+    draftLogo = {url,width:probe.naturalWidth,height:probe.naturalHeight};
+    displayLogo(logo,draftLogo);
+    saveButton.disabled = false;
+    find('[data-logo-label]').textContent = 'Заменить логотип';
+  }
+  logoInput.addEventListener('change',() => {
+    loadLogo(logoInput.files[0]);
+    logoInput.value = '';
+  });
+  logoDrop.addEventListener('dragover',event => {
+    if (!event.dataTransfer.types.includes('Files')) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy';
+    logoDrop.classList.add('drag-over');
+  });
+  logoDrop.addEventListener('dragleave',event => {
+    if (!logoDrop.contains(event.relatedTarget)) logoDrop.classList.remove('drag-over');
+  });
+  logoDrop.addEventListener('drop',event => {
+    event.preventDefault();
+    logoDrop.classList.remove('drag-over');
+    loadLogo(event.dataTransfer.files[0]);
+  });
+  const printPreview = find('[data-preview]');
+  const printPages = find('[data-print-pages]');
+  const staffScreen = find('[data-screen="staff"]');
+  function preparePrint() {
+    printPages.replaceChildren();
+    staffScreen.hidden = true;
+    printPreview.hidden = false;
+    const footers = [];
+    function addPage() {
+      const page = add(printPages,'section','','print-page');
+      if (savedLogo) {
+        const picture = add(page,'img');
+        picture.alt = 'Логотип клуба';
+        displayLogo(picture,savedLogo);
+      }
+      add(page,'h2','Ведомость участников');
+      add(page,'p',rosterDate(),'roster-date');
+      renderRosterMeta(add(page,'div','','roster-meta'));
+      const body = makeRosterTable(page);
+      const footer = add(page,'p','Лист 1 из 1','page-number');
+      footers.push(footer);
+      return {body,footer};
+    }
+    let page = addPage();
+    for (const [index,entry] of ordered().entries()) {
+      const row = addRosterRow(page.body,entry,index);
+      if (page.body.rows.length > 1 && row.getBoundingClientRect().bottom > page.footer.getBoundingClientRect().top - 12) {
+        row.remove();
+        page = addPage();
+        page.body.append(row);
+      }
+    }
+    footers.forEach((footer,index) => {footer.textContent = 'Лист ' + (index+1) + ' из ' + footers.length;});
+    printPreview.scrollIntoView({block:'start'});
+    find('[data-back-to-roster]').focus({preventScroll:true});
+    if (window.self === window.top) window.print();
+  }
+  function sheet(title,caption) {
+    const section = add(docBody,'section','','sheet');
+    add(section,'h2',title);
+    add(section,'p',caption);
+    return section;
+  }
+  function slip(entry,index) {
+    const section = sheet('Индивидуальный бланк № ' + (index+1),'Аттестация по дзюдо · 28 ноября');
+    add(section,'h3',entry.name);
+    add(section,'p','Возраст: ' + entry.age + ' · Пояс: ' + entry.belt);
+    add(section,'p','Оплата: ' + entry.pay);
+    add(section,'p','Результат: ' + (entry.result === results[0] ? '____________________' : entry.result));
+    add(section,'p','Замечания тренера: ________________________________');
+    add(section,'p','Подпись тренера: ____________________');
+  }
+  function renderDoc(key) {
+    docBody.replaceChildren();
+    if (key === 'consent') {
+      sheet('Текст согласия · демо','В рабочей форме здесь будет утверждённый клубом текст согласия.');
+    } else {
+      sheet('Политика обработки данных · демо','В рабочей форме здесь будет ссылка на политику клуба.');
+    }
+  }
+  function closeDoc() {
+    doc.hidden = true;
+  }
+
+  for (const [name,color] of belts) {
+    add(form.elements.belt,'option',name).value = name;
+    const label = add(find('[data-cover-belts]'),'label','','choice');
+    const radio = add(label,'input');
+    radio.type = 'radio';
+    radio.name = 'coverBelt';
+    radio.value = name;
+    radio.checked = name === coverBelt;
+    const swatch = add(label,'span','','swatch');
+    swatch.style.backgroundColor = color;
+    swatch.setAttribute('aria-hidden','true');
+    add(label,'span',name);
+  }
+  for (const [key,value] of Object.entries(config)) settings.elements[key].value = value;
+  for (const [question,answer] of questions) editQuestion(question,answer);
+  for (const item of materials) editMaterial(item);
+  for (const [target,handler] of [[form,register],[settings,save]]) {
+    target.addEventListener('submit',handler);
+    target.querySelector('button[type=submit]').addEventListener('click',handler);
+  }
+  form.elements.belt.addEventListener('change',drawBelt);
+  for (const checkbox of agreements) checkbox.addEventListener('change',() => {
+    if (agreements.every(input => input.checked)) agreementError.textContent = '';
+  });
+  for (const field of requiredFields) {
+    const nameField = field.name === 'last' || field.name === 'first';
+    field.addEventListener('input',event => {
+      if (event.isComposing) return;
+      if (nameField) {
+        formatNameInput(field);
+        if (!nameCharacters.test(field.value.normalize('NFC'))) {
+          showFieldError(field,nameHint);
+          return;
+        }
+      }
+      if (field.name === 'age' && /^0[0-9]+$/.test(field.value)) field.value = String(Number(field.value));
+      if (find('#jlsl-error-' + field.name).textContent) showFieldError(field,fieldMessage(field));
+    });
+    field.addEventListener('blur',() => {
+      if (field.value || field.hasAttribute('aria-invalid')) showFieldError(field,fieldMessage(field));
+    });
+    if (field === form.elements.belt) continue;
+    if (nameField) field.addEventListener('compositionend',() => formatNameInput(field));
+    field.addEventListener('beforeinput',event => restrictInsertion(field,event,event.data));
+    field.addEventListener('paste',event => restrictInsertion(field,event,event.clipboardData?.getData('text/plain')));
+  }
+  settings.addEventListener('input',event => {
+    find('[data-status]').textContent = '';
+    if (['date','deadline'].includes(event.target.name)) settings.elements.deadline.setCustomValidity('');
+    if (event.target.matches('[data-material-title],[data-material-link]')) event.target.setCustomValidity('');
+  });
+  settings.addEventListener('invalid',event => {
+    const details = event.target.closest('details');
+    if (details) details.open = true;
+  },true);
+  guide.addEventListener('click',event => {
+    const summary = event.target.closest('summary');
+    if (!summary || summary.parentElement.open) return;
+    for (const opened of guide.querySelectorAll('details[open]')) opened.open = false;
+    requestAnimationFrame(() => {
+      const item = summary.parentElement;
+      if (!item.open) return;
+      const viewport = guide.getBoundingClientRect();
+      const bounds = item.getBoundingClientRect();
+      const visibleBottom = viewport.top + guide.clientHeight;
+      const movement = Math.max(0,Math.min(bounds.bottom-visibleBottom,bounds.top-viewport.top));
+      guide.scrollTop += movement;
+    });
+  });
+  function reportQuestionPosition(row) {
+    const position = [...questionList.children].indexOf(row) + 1;
+    find('[data-order-status]').textContent = 'Вопрос перемещён на позицию ' + position + '.';
+    find('[data-status]').textContent = '';
+  }
+  function clearDropMark() {
+    markedQuestion?.classList.remove('drop-before','drop-after');
+    markedQuestion = null;
+  }
+  questionList.addEventListener('dragstart',event => {
+    if (!event.target.matches('[data-drag-question]')) return;
+    draggedQuestion = event.target.closest('.question');
+    draggedQuestion.classList.add('dragging');
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/plain','Вопрос');
+  });
+  questionList.addEventListener('dragover',event => {
+    if (!draggedQuestion) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+    const row = event.target.closest('.question');
+    clearDropMark();
+    if (!row || row === draggedQuestion) return;
+    const bounds = row.getBoundingClientRect();
+    row.classList.add(event.clientY < bounds.top + bounds.height/2 ? 'drop-before' : 'drop-after');
+    markedQuestion = row;
+  });
+  questionList.addEventListener('drop',event => {
+    if (!draggedQuestion) return;
+    event.preventDefault();
+    if (markedQuestion) {
+      markedQuestion[markedQuestion.classList.contains('drop-before') ? 'before' : 'after'](draggedQuestion);
+      reportQuestionPosition(draggedQuestion);
+    }
+    draggedQuestion.classList.remove('dragging');
+    draggedQuestion = null;
+    clearDropMark();
+  });
+  questionList.addEventListener('dragend',() => {
+    draggedQuestion?.classList.remove('dragging');
+    draggedQuestion = null;
+    clearDropMark();
+  });
+  questionList.addEventListener('keydown',event => {
+    if (!event.target.matches('[data-drag-question]') || !['ArrowUp','ArrowDown'].includes(event.key)) return;
+    event.preventDefault();
+    const row = event.target.closest('.question');
+    const up = event.key === 'ArrowUp';
+    const sibling = up ? row.previousElementSibling : row.nextElementSibling;
+    if (!sibling) return;
+    sibling[up ? 'before' : 'after'](row);
+    event.target.focus();
+    reportQuestionPosition(row);
+  });
+  for (const option of root.querySelectorAll('[name="roster-sort"]')) option.addEventListener('change',renderRows);
+  find('[data-back-to-roster]').addEventListener('click',() => {
+    printPreview.hidden = true;
+    staffScreen.hidden = false;
+    find('[data-print]').focus({preventScroll:true});
+    staffScreen.scrollIntoView({block:'start'});
+  });
+  root.addEventListener('click',event => {
+    const control = event.target.closest('[data-view],[data-doc],[data-close],[data-print],[data-again],[data-add-question],[data-remove-question],[data-add-material],[data-remove-material]');
+    if (!control) return;
+    if (control.dataset.view) {
+      printPreview.hidden = true;
+      if (control.dataset.view !== 'participant') root.querySelectorAll('video').forEach(video => video.pause());
+      for (const button of root.querySelectorAll('nav [data-view]')) button.setAttribute('aria-pressed',String(button.dataset.view === control.dataset.view));
+      for (const screen of root.querySelectorAll('[data-screen]')) screen.hidden = screen.dataset.screen !== control.dataset.view;
+      closeDoc();
+    } else if (control.dataset.doc) {
+      event.preventDefault();
+      opener = control;
+      renderDoc(control.dataset.doc);
+      doc.hidden = false;
+      find('[data-close]').focus({preventScroll:true});
+      doc.scrollIntoView({block:'nearest'});
+    } else if (control.hasAttribute('data-close')) {
+      closeDoc();
+      opener?.focus();
+    } else if (control.hasAttribute('data-print')) {
+      preparePrint();
+    } else if (control.hasAttribute('data-again')) {
+      find('[data-success]').hidden = true;
+      form.hidden = false;
+      form.elements.last.focus();
+    } else if (control.hasAttribute('data-add-question')) {
+      editQuestion().focus();
+    } else if (control.hasAttribute('data-add-material')) {
+      editMaterial().focus();
+      find('[data-status]').textContent = '';
+    } else {
+      const material = control.hasAttribute('data-remove-material');
+      control.closest(material ? '.material-edit' : '.question').remove();
+      find(material ? '[data-add-material]' : '[data-add-question]').focus();
+      find('[data-status]').textContent = '';
+    }
+  });
+  displayLogo(logo,draftLogo);
+  applyLogo();
+  renderParticipant();
+  renderRows();
+})();
+</script>
+</div>
+
+</body></html>
