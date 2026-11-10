@@ -634,7 +634,7 @@
   const nameCharacters = /^(?:(?=\p{Script=Cyrillic})\p{L}|[ '\u00a0’\-‑])*$/u;
   const nameWords = /^\p{L}[\p{L}\p{M}]*(?:[ '’\-‑]\p{L}[\p{L}\p{M}]*)*$/u;
   const nameHint = 'Используйте кириллицу. В составных именах и фамилиях можно ставить пробел, дефис или апостроф.';
-  const ageHint = 'Укажите целый возраст от 0 до 100.';
+  const ageHint = 'Укажите целый возраст от 2 до 100.';
   const requiredFields = ['last','first','age','belt'].map(name => form.elements[name]);
   function capitalizeName(value) {
     return value.replace(/^([ \u00a0]*)(\p{Script=Cyrillic})/u,(_,spaces,letter) => spaces + letter.toLocaleUpperCase('ru'));
@@ -650,7 +650,7 @@
     field.setSelectionRange(selectionStart,selectionEnd,selectionDirection);
   }
   function ageAllowed(value) {
-    return /^[0-9]{1,3}$/.test(value) && Number(value) <= 100;
+    return /^[0-9]{1,3}$/.test(value) && Number(value) >= 2 && Number(value) <= 100;
   }
   function fieldMessage(field) {
     const value = field.value;
@@ -673,7 +673,7 @@
     const next = field.value.slice(0,field.selectionStart) + inserted + field.value.slice(field.selectionEnd);
     const age = field.name === 'age';
     const hasNameCharacters = !age && nameCharacters.test(next.normalize('NFC'));
-    const allowed = age ? next === '' || ageAllowed(next) : hasNameCharacters && next.length <= 50;
+    const allowed = age ? next === '' || (/^[0-9]{1,3}$/.test(next) && Number(next) <= 100) : hasNameCharacters && next.length <= 50;
     if (allowed) return;
     event.preventDefault();
     const message = age ? ageHint : hasNameCharacters ? 'Введите не более 50 символов.' : nameHint;
