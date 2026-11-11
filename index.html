@@ -12,8 +12,6 @@
 #judo-shared-logo :is(header,.heading,.actions){display:flex;align-items:center;flex-wrap:wrap;gap:8px}
 #judo-shared-logo :is(header,.heading){justify-content:space-between}
 #judo-shared-logo header{padding:14px clamp(16px,4cqw,40px)}
-#judo-shared-logo .brand{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:750;letter-spacing:.08em}
-#judo-shared-logo .brand b{display:grid;place-items:center;width:32px;height:32px;background:#141414;color:#fff;border-radius:4px;font-size:18px}
 #judo-shared-logo nav{display:flex;flex-wrap:wrap;gap:3px;padding:3px;background:var(--wash);border:1px solid var(--line);border-radius:7px}
 #judo-shared-logo nav button{padding:5px 10px;min-height:32px;border:1px solid transparent;background:transparent;border-radius:4px;font-size:12px;font-weight:650}
 #judo-shared-logo nav button[aria-pressed=true]{background:#fff;border-color:#ccc}
@@ -162,7 +160,6 @@
 }
 </style>
 <header>
-  <div class="brand"><b aria-hidden="true">Д</b> КЛУБ ДЗЮДО</div>
   <nav aria-label="Режим прототипа">
     <button type="button" data-view="participant" aria-pressed="false">Участник</button>
     <button type="button" data-view="settings" aria-pressed="false">Настройки формы</button>
@@ -214,7 +211,7 @@
     <label class="logo-drop">
       <input class="sr-only" type="file" accept="image/*" data-logo-file aria-label="Загрузить логотип">
       <img data-logo alt="Логотип клуба" hidden>
-      <span class="logo-copy"><strong data-logo-label>Заменить логотип</strong><small>Выберите файл или перетащите изображение</small></span>
+      <span class="logo-copy"><strong data-logo-label>Добавить логотип</strong><small>Выберите файл или перетащите изображение</small></span>
     </label>
     <p class="logo-error status" data-logo-error role="alert"></p>
       <div class="heading">
@@ -745,19 +742,7 @@
   const logoDrop = logoInput.closest('label');
   const logoError = find('[data-logo-error]');
   let logoVersion = 0;
-  const sampleLogo = new Blob([`
-    <svg xmlns="http://www.w3.org/2000/svg" width="180" height="52" viewBox="0 0 180 52">
-      <rect width="180" height="52" rx="8" fill="#161616"/>
-      <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="27" cy="26" r="15"/>
-        <path d="M16 23l11 4 11-4m-11 4-8 8m8-8 8 8"/>
-      </g>
-      <g fill="#fff" font-family="system-ui,sans-serif">
-        <text x="52" y="25" font-size="16" font-weight="750" letter-spacing="1">ТАТАМИ</text>
-        <text x="52" y="40" font-size="9" font-weight="600" letter-spacing="1.2">ДЗЮДО-КЛУБ</text>
-      </g>
-    </svg>`],{type:'image/svg+xml'});
-  let draftLogo = {url:URL.createObjectURL(sampleLogo),width:180,height:52};
+  let draftLogo = null;
   let savedLogo = null;
   const saveButton = settings.querySelector('button[type=submit]');
   function displayLogo(image,asset) {
