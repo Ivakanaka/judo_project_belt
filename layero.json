@@ -1,0 +1,4 @@
+{
+  "runtime": "python_web",
+  "startCommand": "python3 server.py --bind 0.0.0.0"
+}
