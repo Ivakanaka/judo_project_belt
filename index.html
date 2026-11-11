@@ -128,8 +128,8 @@
 #judo-shared-logo .roster-toolbar{margin:16px 0 11px;align-items:end}
 #judo-shared-logo .roster-toolbar fieldset{display:flex;gap:7px;flex-wrap:wrap}
 #judo-shared-logo .sort-tab{position:relative;cursor:pointer}
-#judo-shared-logo .sort-tab:has(:checked) .action{border-color:#141414;box-shadow:inset 0 0 0 1px #141414}
-#judo-shared-logo .sort-tab:focus-within .action{outline:2px solid #141414;outline-offset:2px}
+#judo-shared-logo .sort-tab[aria-pressed=true]{border-color:#141414;box-shadow:inset 0 0 0 1px #141414}
+#judo-shared-logo .sort-tab:focus-visible{outline:2px solid #141414;outline-offset:2px}
 #judo-shared-logo .roster-meta{display:flex;gap:7px 24px;flex-wrap:wrap;color:#4b4b4b;font-size:13px;margin:0 0 10px}
 #judo-shared-logo .roster-table{table-layout:fixed;min-width:575px}
 #judo-shared-logo .roster-table :is(th,td){border:1px solid #c5c5c5}
@@ -283,8 +283,8 @@
     <div class="heading roster-toolbar">
       <fieldset>
         <legend>Сортировка</legend>
-        <label class="sort-tab"><input class="sr-only" type="radio" name="roster-sort" value="age" checked><span class="action">По возрасту</span></label>
-        <label class="sort-tab"><input class="sr-only" type="radio" name="roster-sort" value="name"><span class="action">По фамилии А–Я</span></label>
+        <button type="button" class="action sort-tab" data-roster-sort="age" aria-pressed="true">По возрасту ↑</button>
+        <button type="button" class="action sort-tab" data-roster-sort="name" aria-pressed="false">По фамилии А–Я</button>
       </fieldset>
       <div class="actions">
         <button type="button" class="action" data-share>Поделиться</button>
@@ -328,7 +328,7 @@
   let draggedQuestion = null;
   let markedQuestion = null;
   const files = new WeakMap();
-  const belts = [['Белый','#fff'],['Жёлтый','#eec64b'],['Оранжевый','#df8c48'],['Зелёный','#659464'],['Синий','#426bb1'],['Чёрный','#222']];
+  const belts = [['Белый','#fff'],['Жёлтый','#eec64b'],['Оранжевый','#df8c48'],['Зелёный','#659464'],['Синий','#426bb1'],['Коричневый','#8b5a2b'],['Чёрный','#222']];
   const config = {
     title:'Сдача на пояс',date:'2026-11-28',deadline:'2026-11-25',start:'11:00',venue:'Зал клуба',background:'#ffffff',
     formTitle:'Запись участника',formHint:'Укажите данные того, кто будет сдавать на пояс.',lastLabel:'Фамилия',firstLabel:'Имя',
@@ -338,6 +338,9 @@
     privacyText:'Политика обработки персональных данных',privacyUrl:''
   };
   let coverBelt = 'Белый';
+  let submittedBelt = null;
+  let rosterSort = 'age';
+  let rosterDirection = 1;
   let questions = [
     ['Как проходит сдача','Отметьтесь у помощника, пройдите разминку и дождитесь вызова. Упражнения зависят от пояса.'],
     ['Когда прийти и что взять','Возьмите дзюдоги, текущий пояс, сменную обувь и воду. Время сбора указано в подтверждении.'],
@@ -382,7 +385,7 @@
   }
   function drawBelt() {
     if (!ctx) return;
-    const belt = form.elements.belt.value || coverBelt;
+    const belt = submittedBelt || form.elements.belt.value || coverBelt;
     ctx.setTransform(2,0,0,2,0,0);
     ctx.clearRect(0,0,390,340);
     ctx.fillStyle = (belts.find(([name]) => name === belt) || belts.find(([name]) => name === coverBelt))[1];
@@ -689,6 +692,7 @@
     const {last,first,age,belt} = form.elements;
     const entry = {name:normalizedName(last.value)+' '+normalizedName(first.value),age:Number(age.value),belt:belt.value};
     entries.push(entry);
+    submittedBelt = entry.belt;
     find('[data-confirmation]').textContent = entry.name + ' · ' + entry.belt.toLowerCase() + ' пояс';
     closeDoc();
     form.reset();
@@ -701,8 +705,12 @@
     renderRows();
   }
   function ordered() {
-    const byAge = find('[name="roster-sort"]:checked').value === 'age';
-    return [...entries].sort((a,b) => (byAge ? a.age-b.age : 0) || a.name.localeCompare(b.name,'ru'));
+    return [...entries].sort((a,b) => {
+      const nameOrder = a.name.localeCompare(b.name,'ru');
+      return rosterSort === 'age'
+        ? rosterDirection*(a.age-b.age) || nameOrder
+        : rosterDirection*nameOrder || a.age-b.age;
+    });
   }
   function rosterDate() {
     return 'Аттестация · ' + dateLabel(config.date);
@@ -720,6 +728,7 @@
     for (const width of [7,32,10,14,15,22]) add(cols,'col').style.width = width + '%';
     const head = add(add(table,'thead'),'tr');
     for (const name of ['№','Участник','Возраст','Пояс','Оплата','Результат сдачи']) add(head,'th',name).scope = 'col';
+    head.children[rosterSort === 'age' ? 2 : 1].setAttribute('aria-sort',rosterDirection === 1 ? 'ascending' : 'descending');
     return add(table,'tbody');
   }
   function addRosterRow(body,entry,index) {
@@ -728,6 +737,17 @@
     return row;
   }
   function renderRows() {
+    for (const button of root.querySelectorAll('[data-roster-sort]')) {
+      const active = button.dataset.rosterSort === rosterSort;
+      const ascending = !active || rosterDirection === 1;
+      button.setAttribute('aria-pressed',String(active));
+      button.textContent = button.dataset.rosterSort === 'age'
+        ? 'По возрасту ' + (ascending ? '↑' : '↓')
+        : 'По фамилии ' + (ascending ? 'А–Я' : 'Я–А');
+      button.setAttribute('aria-label',button.dataset.rosterSort === 'age'
+        ? 'По возрасту, ' + (ascending ? 'сначала младшие' : 'сначала старшие')
+        : 'По фамилии, ' + (ascending ? 'от А до Я' : 'от Я до А'));
+    }
     find('[data-roster-date]').textContent = rosterDate();
     const tally = find('[data-tally]');
     tally.replaceChildren();
@@ -1059,7 +1079,14 @@
     event.target.focus();
     reportQuestionPosition(row);
   });
-  for (const option of root.querySelectorAll('[name="roster-sort"]')) option.addEventListener('change',renderRows);
+  for (const button of root.querySelectorAll('[data-roster-sort]')) button.addEventListener('click',() => {
+    if (rosterSort === button.dataset.rosterSort) rosterDirection *= -1;
+    else {
+      rosterSort = button.dataset.rosterSort;
+      rosterDirection = 1;
+    }
+    renderRows();
+  });
   find('[data-back-to-roster]').addEventListener('click',() => {
     printPreview.hidden = true;
     staffScreen.hidden = false;
@@ -1090,6 +1117,8 @@
     } else if (control.hasAttribute('data-again')) {
       find('[data-success]').hidden = true;
       form.hidden = false;
+      submittedBelt = null;
+      drawBelt();
       form.elements.last.focus();
     } else if (control.hasAttribute('data-add-question')) {
       editQuestion().focus();

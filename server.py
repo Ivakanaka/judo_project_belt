@@ -16,7 +16,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 ROOT = Path(__file__).resolve().parent
 TTL = 24 * 60 * 60
 MAX_BODY = 2 * 1024 * 1024
-BELTS = ['Белый', 'Жёлтый', 'Оранжевый', 'Зелёный', 'Синий', 'Чёрный']
+BELTS = ['Белый', 'Жёлтый', 'Оранжевый', 'Зелёный', 'Синий', 'Коричневый', 'Чёрный']
 
 
 class SnapshotStore:

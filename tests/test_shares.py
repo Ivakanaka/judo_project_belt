@@ -76,6 +76,16 @@ class SharesTest(unittest.TestCase):
                                      {'Content-Type': 'application/json', 'Origin': 'https://other.test'})[0], 403)
         self.assertEqual(self.request('GET', '/work/shares.sqlite3')[0], 404)
 
+    def test_brown_belt_is_accepted_and_printed_in_belt_order(self):
+        self.snapshot['entries'] = [
+            {**self.snapshot['entries'][0], 'belt': belt}
+            for belt in ['Чёрный', 'Коричневый', 'Синий']
+        ]
+        path = self.create()
+        status, _, body = self.request('GET', path)
+        self.assertEqual(status, 200)
+        self.assertIn('Пояса для сдачи: Синий, Коричневый, Чёрный', body.decode())
+
     def test_html_escaped_and_no_template_injection(self):
         self.snapshot['entries'][0]['name'] = '<script>alert(1)</script>{{ROWS}}'
         text = render_snapshot(validate(self.snapshot))
