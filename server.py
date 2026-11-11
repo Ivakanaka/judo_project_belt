@@ -111,7 +111,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-store')
         self.send_header('Referrer-Policy', 'no-referrer')
         self.send_header('X-Content-Type-Options', 'nosniff')
-        self.send_header('X-Robots-Tag', 'noindex, nofollow, noarchive')
+        self.send_header('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet, noimageindex')
         self.send_header('Content-Security-Policy', "default-src 'none'; img-src 'self' blob: data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; media-src blob:; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
                          if self.path.startswith('/share/') else
                          "default-src 'self'; img-src 'self' blob: data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; media-src 'self' blob: https:; frame-ancestors 'none'; base-uri 'none'")
