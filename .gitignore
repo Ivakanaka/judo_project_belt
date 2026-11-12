@@ -1,3 +1,11 @@
 work/
 __pycache__/
 *.pyc
+.env
+.env.*
+!.env.example
+secrets/
+*key*.json
+*.pem
+*.key
+.venv/

@@ -1,4 +1,4 @@
-"""Local prototype server with expiring, immutable roster snapshots (stdlib only)."""
+"""Prototype server with expiring snapshots and an optional read-only YDB check."""
 import argparse
 import base64
 import hashlib
@@ -9,9 +9,11 @@ from pathlib import Path
 import re
 import secrets
 import sqlite3
+import threading
 import time
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from ydb_connection import log_connection_check
 
 ROOT = Path(__file__).resolve().parent
 TTL = 24 * 60 * 60
@@ -160,4 +162,6 @@ if __name__ == '__main__':
     server = ThreadingHTTPServer((args.bind, args.port), Handler)
     server.store = SnapshotStore(args.database)
     print(f'Judo server ready on port {args.port}', flush=True)
+    # Do not block the prototype or HTTP startup while checking the external database.
+    threading.Thread(target=log_connection_check, name='ydb-check', daemon=True).start()
     server.serve_forever()
